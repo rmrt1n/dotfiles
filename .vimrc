@@ -16,7 +16,7 @@
 set background=light
 
 " set colorscheme
-colorscheme PaperColor
+" colorscheme PaperColor
 
 " set syntax highlighting
 syntax on     
