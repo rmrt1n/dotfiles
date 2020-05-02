@@ -7,7 +7,7 @@ bind 'set completion-ignore-case on'
 
 # aliases
 # ls aliases
-alias ls='ls -l --color-auto'
+alias ls='ls -l --color=auto'
 alias ll='ls -Alh'
 alias la='ls -AC'
 
@@ -35,7 +35,5 @@ alias cd..='cd ..'
 alias dw='cd ~/Downloads'
 alias c='clear'
 alias q='exit'
-alias m='export PS1="$ "; clear'
-alias n='source ~/.bashrc; clear'
 alias ta='tmux attach'
 
