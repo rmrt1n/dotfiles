@@ -17,6 +17,7 @@ alias rm='rm -vI'
 alias cp='cp -v'
 
 # config file shortcuts
+alias bashrc='vim ~/.bashrc'
 alias aliases='vim ~/.bash_aliases'
 alias vimrc='vim ~/.vimrc'
 
