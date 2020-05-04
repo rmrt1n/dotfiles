@@ -7,7 +7,8 @@ bind 'set completion-ignore-case on'
 
 # aliases
 # ls aliases
-alias ls='ls -l --color=auto'
+alias ls='ls --color=auto'
+alias l='ls -l'
 alias ll='ls -Alh'
 alias la='ls -AC'
 
