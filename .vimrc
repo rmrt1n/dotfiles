@@ -1,22 +1,28 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 " => vimrc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 "sections:
 "   * user interface options
 "   * search options 
 "   * indentation options 
 "   * custom keybindings
+"   * filetype specific settings
+"   * plugins
 "   * misc
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 " => user interface options
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 " set light background
 set background=light
 
 " set colorscheme
-" colorscheme PaperColor
+colorscheme PaperColor
+" set termguicolors
+" let ayucolor="light"
+" colorscheme ayu
+" colorscheme onehalflight
 
 " set syntax highlighting
 syntax on     
@@ -28,6 +34,9 @@ set number
 set cursorline
 " highlight entire line instead of underline
 highlight CursorLine cterm=none ctermbg=254
+
+" remove statusbar
+set laststatus=0
 
 " set mouse support a=all
 set mouse=a
@@ -51,9 +60,9 @@ set wrap
 set linebreak
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 " => search options
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 " ignore case when searching
 set ignorecase
 
@@ -72,11 +81,12 @@ set showmatch
 set mat=0
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 " => indentation options
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 " enable indentation rules that are file-type specific
 filetype indent on    
+filetype plugin on
 
 " convert tabs into spaces
 set expandtab
@@ -94,9 +104,9 @@ set autoindent
 set smartindent
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 " => custom keybindings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 " set leader key to space bar
 let mapleader = " " 
 
@@ -111,26 +121,84 @@ nmap <leader>n :noh<cr>
 " v-split new buffer
 nmap <leader><Enter> :vnew<cr>
 
+" v-split terminal
+nmap <leader>t :vert term<cr>
+
 " easier switching between tiles
-nnoremap <leader>j <C-W><C-J>
-nnoremap <leader>k <C-W><C-K>
-nnoremap <leader>l <C-W><C-L>
-nnoremap <leader>h <C-W><C-H>
+nmap <leader>j <C-W><C-J>
+nmap <leader>k <C-W><C-K>
+nmap <leader>l <C-W><C-L>
+nmap <leader>h <C-W><C-H>
 
 " add blank line under cursor
 nmap <leader>o o<Esc>
 
 " faster than reaching for esc key
-inoremap jk <Esc>
+imap jk <Esc>
 
 " faster moving in wrapped lines
 map j gj
 map k gk
 
+" autoclose brackets & quotes
+imap ( ()<Esc>i
+imap [ []<Esc>i
+imap { {}<Esc>i
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""
+" => filetype specific settings
+""""""""""""""""""""""""""""""""""""""""""""
+" r, rmarkdown
+autocmd Filetype r setlocal tabstop=2 shiftwidth=2
+autocmd Filetype r imap -- <-
+autocmd Filetype r imap PP %>%
+
+autocmd Filetype rmd setlocal tabstop=2 shiftwidth=2
+autocmd Filetype rmd imap -- <-
+autocmd Filetype rmd nmap <leader>i o```{r<Esc>o<cr>```<Esc>k
+autocmd Filetype rmd imap PP %>%
+
+" html, css
+autocmd Filetype html setlocal tabstop=2 shiftwidth=2
+autocmd Filetype css setlocal tabstop=2 shiftwidth=2
+
+
+""""""""""""""""""""""""""""""""""""""""""""
+" => plugins
+""""""""""""""""""""""""""""""""""""""""""""
+" plugins will be downloaded under the specified directory
+call plug#begin('~/.vim/plugged')
+
+" vimwiki
+Plug 'vimwiki/vimwiki'
+
+" vimwiki settings
+" list of wikis 
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+" check checkboxes shortcut
+nmap <leader>x :VimwikiToggleListItem<cr>
+
+" nerdcommenter
+Plug 'scrooloose/nerdcommenter'
+
+" nerdcommenter settings
+" add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" list ends here. plugins become visible to vim after this call
+call plug#end()
+
+" netrw file explorer settings
+let g:netrw_liststyle=3
+let g:netrw_banner=0
+let g:netrw_winsize=15
+let g:netrw_browse_split=3
+
+
+""""""""""""""""""""""""""""""""""""""""""""
 " => misc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
@@ -154,10 +222,3 @@ set autoread
 
 " allow buffers with unsaved changes
 set hidden
-
-" netrw file explorer settings
-let g:netrw_liststyle=3
-let g:netrw_banner=0
-let g:netrw_winsize=15
-let g:netrw_browse_split=3
- 
