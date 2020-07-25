@@ -2,13 +2,42 @@
 " => vimrc
 """"""""""""""""""""""""""""""""""""""""""""
 "sections:
+"   * plugins
 "   * user interface options
 "   * search options 
 "   * indentation options 
 "   * custom keybindings
 "   * filetype specific settings
-"   * plugins
 "   * misc
+
+
+""""""""""""""""""""""""""""""""""""""""""""
+" => plugins
+""""""""""""""""""""""""""""""""""""""""""""
+" plugins will be downloaded under the specified directory
+call plug#begin('~/.vim/plugged')
+
+" nerdcommenter
+Plug 'scrooloose/nerdcommenter'
+
+" alternate comment for c
+let g:NERDAltDelims_c = 1
+
+" nerdcommenter settings
+" add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" papercolor colorscheme
+Plug 'nlknguyen/papercolor-theme'
+
+" list ends here. plugins become visible to vim after this call
+call plug#end()
+
+" netrw file explorer settings
+let g:netrw_liststyle=3
+let g:netrw_banner=0
+let g:netrw_winsize=15
+let g:netrw_browse_split=3
 
 
 """"""""""""""""""""""""""""""""""""""""""""
@@ -17,12 +46,8 @@
 " set light background
 set background=light
 
-" set colorscheme
+" colorscheme
 colorscheme PaperColor
-" set termguicolors
-" let ayucolor="light"
-" colorscheme ayu
-" colorscheme onehalflight
 
 " set syntax highlighting
 syntax on     
@@ -159,41 +184,11 @@ autocmd Filetype rmd imap -- <-
 autocmd Filetype rmd nmap <leader>i o```{r<Esc>o<cr>```<Esc>k
 autocmd Filetype rmd imap PP %>%
 
-" html, css
+" html, css, json
 autocmd Filetype html setlocal tabstop=2 shiftwidth=2
+autocmd Filetype html imap < <><Esc>i
 autocmd Filetype css setlocal tabstop=2 shiftwidth=2
-
-
-""""""""""""""""""""""""""""""""""""""""""""
-" => plugins
-""""""""""""""""""""""""""""""""""""""""""""
-" plugins will be downloaded under the specified directory
-call plug#begin('~/.vim/plugged')
-
-" vimwiki
-Plug 'vimwiki/vimwiki'
-
-" vimwiki settings
-" list of wikis 
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
-" check checkboxes shortcut
-nmap <leader>x :VimwikiToggleListItem<cr>
-
-" nerdcommenter
-Plug 'scrooloose/nerdcommenter'
-
-" nerdcommenter settings
-" add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-
-" list ends here. plugins become visible to vim after this call
-call plug#end()
-
-" netrw file explorer settings
-let g:netrw_liststyle=3
-let g:netrw_banner=0
-let g:netrw_winsize=15
-let g:netrw_browse_split=3
+autocmd Filetype json setlocal tabstop=2 shiftwidth=2
 
 
 """"""""""""""""""""""""""""""""""""""""""""
@@ -222,3 +217,4 @@ set autoread
 
 " allow buffers with unsaved changes
 set hidden
+
