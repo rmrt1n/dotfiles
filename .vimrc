@@ -20,15 +20,23 @@ call plug#begin('~/.vim/plugged')
 " nerdcommenter
 Plug 'scrooloose/nerdcommenter'
 
+" nerdcommenter settings
 " alternate comment for c
 let g:NERDAltDelims_c = 1
-
-" nerdcommenter settings
 " add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 
 " papercolor colorscheme
 Plug 'nlknguyen/papercolor-theme'
+
+" github colorscheme
+Plug 'cormacrelf/vim-colors-github'
+
+" auto pair
+Plug 'jiangmiao/auto-pairs'
+
+" ocp-indent
+Plug 'def-lkb/ocp-indent-vim'
 
 " list ends here. plugins become visible to vim after this call
 call plug#end()
@@ -37,7 +45,8 @@ call plug#end()
 let g:netrw_liststyle=3
 let g:netrw_banner=0
 let g:netrw_winsize=15
-let g:netrw_browse_split=3
+let g:netrw_browse_split=4
+let g:netrw_altv=1
 
 
 """"""""""""""""""""""""""""""""""""""""""""
@@ -46,8 +55,10 @@ let g:netrw_browse_split=3
 " set light background
 set background=light
 
+set t_Co=256
 " colorscheme
-colorscheme PaperColor
+" colorscheme PaperColor
+colorscheme github
 
 " set syntax highlighting
 syntax on     
@@ -58,7 +69,7 @@ set number
 " show a visual line under cursor's current line
 set cursorline
 " highlight entire line instead of underline
-highlight CursorLine cterm=none ctermbg=254
+" highlight CursorLine cterm=none ctermbg=254
 
 " remove statusbar
 set laststatus=0
@@ -81,8 +92,12 @@ set scrolloff=7
 
 " enable line wrapping
 set wrap
+
 " avoide wrapping a line in the middle of a word
 set linebreak
+
+" ruler at 80
+set colorcolumn=80
 
 
 """"""""""""""""""""""""""""""""""""""""""""
@@ -147,13 +162,17 @@ nmap <leader>n :noh<cr>
 nmap <leader><Enter> :vnew<cr>
 
 " v-split terminal
-nmap <leader>t :vert term<cr>
+" nmap <leader>t :vert term<cr>
 
 " easier switching between tiles
 nmap <leader>j <C-W><C-J>
 nmap <leader>k <C-W><C-K>
 nmap <leader>l <C-W><C-L>
 nmap <leader>h <C-W><C-H>
+
+" faster buffer switching
+nmap <leader>g :bn<cr>
+nmap <leader>G :bp<cr>
 
 " add blank line under cursor
 nmap <leader>o o<Esc>
@@ -165,10 +184,11 @@ imap jk <Esc>
 map j gj
 map k gk
 
+" nmap <leader>p :RainbowParenthesesToggle<cr>
 " autoclose brackets & quotes
-imap ( ()<Esc>i
-imap [ []<Esc>i
-imap { {}<Esc>i
+" imap ( ()<Esc>i
+" imap [ []<Esc>i
+" imap { {}<Esc>i
 
 
 """"""""""""""""""""""""""""""""""""""""""""
@@ -189,6 +209,18 @@ autocmd Filetype html setlocal tabstop=2 shiftwidth=2
 autocmd Filetype html imap < <><Esc>i
 autocmd Filetype css setlocal tabstop=2 shiftwidth=2
 autocmd Filetype json setlocal tabstop=2 shiftwidth=2
+
+" scheme
+autocmd Filetype scm setlocal lisp
+
+" c
+autocmd Filetype c nmap <leader>m :w<cr>:!make<cr>
+
+" ocaml
+autocmd Filetype ocaml setlocal tabstop=2 shiftwidth=2
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+set rtp+=</home/rmrt1n/.opam/default/bin/ocp-indent>
 
 
 """"""""""""""""""""""""""""""""""""""""""""
