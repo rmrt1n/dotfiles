@@ -19,8 +19,6 @@ call plug#begin('~/.vim/plugged')
 
 " nerdcommenter
 Plug 'scrooloose/nerdcommenter'
-
-" nerdcommenter settings
 " alternate comment for c
 let g:NERDAltDelims_c = 1
 " add spaces after comment delimiters by default
@@ -34,6 +32,15 @@ Plug 'cormacrelf/vim-colors-github'
 
 " auto pair
 Plug 'jiangmiao/auto-pairs'
+
+" rainbow parentheses
+Plug 'luochen1990/rainbow'
+let g:rainbow_conf = {
+\   'ctermfgs': [
+\       'darkred', '166', 'darkyellow', 'darkgreen',
+\       '33', '20', '5', '200'
+\   ]
+\ }
 
 " ocp-indent
 Plug 'def-lkb/ocp-indent-vim'
@@ -162,7 +169,7 @@ nmap <leader>n :noh<cr>
 nmap <leader><Enter> :vnew<cr>
 
 " v-split terminal
-" nmap <leader>t :vert term<cr>
+nmap <leader>t :vert term<cr>
 
 " easier switching between tiles
 nmap <leader>j <C-W><C-J>
@@ -184,12 +191,11 @@ imap jk <Esc>
 map j gj
 map k gk
 
-" nmap <leader>p :RainbowParenthesesToggle<cr>
-" autoclose brackets & quotes
-" imap ( ()<Esc>i
-" imap [ []<Esc>i
-" imap { {}<Esc>i
+" toggle rainbow paren
+nmap <leader>p :RainbowToggle<cr>
 
+nmap <Leader>hr :%!xxd<CR> :set filetype=xxd<CR>
+nmap <Leader>hw :%!xxd -r<CR> :set binary<CR> :set filetype=<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""
 " => filetype specific settings
@@ -209,11 +215,16 @@ autocmd Filetype html setlocal tabstop=2 shiftwidth=2
 autocmd Filetype html imap < <><Esc>i
 autocmd Filetype css setlocal tabstop=2 shiftwidth=2
 autocmd Filetype json setlocal tabstop=2 shiftwidth=2
+autocmd Filetype sh setlocal tabstop=2 shiftwidth=2
 
 " scheme
-autocmd Filetype scm setlocal lisp
+autocmd Filetype scheme setlocal lisp
+autocmd Filetype scheme setlocal tabstop=2 shiftwidth=2
+autocmd Filetype scheme let b:AutoPairs = AutoPairsDefine({}, ["'"])
+autocmd Filetype scheme :RainbowToggle
 
 " c
+autocmd BufNewFile *.c 0r ~/Templates/c.c
 autocmd Filetype c nmap <leader>m :w<cr>:!make<cr>
 
 " ocaml
