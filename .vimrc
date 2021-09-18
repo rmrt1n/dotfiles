@@ -22,7 +22,7 @@ Plug 'scrooloose/nerdcommenter'
 " alternate comment for c
 let g:NERDAltDelims_c = 1
 " add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
+" let g:NERDSpaceDelims = 1
 
 " papercolor colorscheme
 Plug 'nlknguyen/papercolor-theme'
@@ -44,6 +44,9 @@ let g:rainbow_conf = {
 \       '33', '20', '5', '200'
 \   ]
 \ }
+
+" prettier
+Plug 'prettier/vim-prettier'
 
 " ocp-indent
 " Plug 'def-lkb/ocp-indent-vim'
@@ -106,14 +109,17 @@ set wrap
 " avoide wrapping a line in the middle of a word
 set linebreak
 
-" ruler at 80
-set colorcolumn=80
+" rulers
+set colorcolumn=80,100,120
 
 " code fold option
 set foldmethod=syntax
 " fold 1 level only
-set foldnestmax=1
+set foldnestmax=1 
 
+" set cursor to | in insert mode
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
 
 """"""""""""""""""""""""""""""""""""""""""""
 " => search options
@@ -209,11 +215,14 @@ nmap <leader>f za
 nmap <leader>F zi
 
 " toggle rainbow paren
-nmap <leader>p :RainbowToggle<cr>
+" nmap <leader>p :RainbowToggle<cr>
 
 " highlight current line
 " nmap <leader>m mm:execute 'match Search /\%'.line('.').'l/'<CR>
 nmap <Leader>m :call matchadd('Search', '\%'.line('.').'l')<CR>
+
+" toggle uppercase
+nmap ` ~
 
 """"""""""""""""""""""""""""""""""""""""""""
 " => filetype specific settings

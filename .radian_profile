@@ -1,0 +1,4 @@
+options(radian.color_scheme = "colorful")
+options(radian.editing_mode = "vi")
+options(radian.highlight_matching_bracket = FALSE)
+options(radian.tab_size = 2)

@@ -128,5 +128,5 @@ alias m='source ~/.bashrc; clear'
 alias ctf='cd ~/CTF'
 alias rmrf='rm -rf'
 alias news='newsboat'
-alias pdf='cd ~/Documents/pdfs'
 
+export GOPATH=/home/rmrt1n/Projects/
