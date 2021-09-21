@@ -1,10 +1,10 @@
 # .bashrc
 
-# Source global definitions
+# source global definitions
 if [ -f /etc/bashrc ]; then . /etc/bashrc
 fi
 
-# User specific environment
+# user specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
@@ -108,6 +108,7 @@ alias py='python3'
 alias jsonfmt='python3 -m json.tool'
 alias jn='jupyter notebook'
 alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+alias dev='tmuxp load dev'
 
 # distro specific aliases
 alias uu='sudo dnf upgrade && flatpak update'

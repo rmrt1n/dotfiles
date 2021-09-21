@@ -22,7 +22,7 @@ Plug 'scrooloose/nerdcommenter'
 " alternate comment for c
 let g:NERDAltDelims_c = 1
 " add spaces after comment delimiters by default
-" let g:NERDSpaceDelims = 1
+let g:NERDSpaceDelims = 1
 
 " papercolor colorscheme
 Plug 'nlknguyen/papercolor-theme'

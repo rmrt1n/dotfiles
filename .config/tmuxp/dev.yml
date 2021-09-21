@@ -1,0 +1,12 @@
+session_name: dev
+windows:
+- window_name: dev-env
+  focus: true
+  layout: 5aec,190x46,0,0[190x38,0,0{95x38,0,0,0,94x38,96,0,2},190x7,0,39,1]
+  panes:
+  - pane
+  - pane
+  - focus: true
+- window_name: more-space
+  panes:
+    - pane
