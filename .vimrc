@@ -51,6 +51,11 @@ Plug 'prettier/vim-prettier'
 " ocp-indent
 " Plug 'def-lkb/ocp-indent-vim'
 
+" svelte plugin
+Plug 'evanleck/vim-svelte'
+let g:svelte_indent_script = 0
+let g:svelte_indent_style = 0
+
 " list ends here. plugins become visible to vim after this call
 call plug#end()
 
