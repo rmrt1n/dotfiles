@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""""""""
 " => vimrc
 """"""""""""""""""""""""""""""""""""""""""""
-"sections:
+" sections:
 "   * plugins
 "   * user interface options
 "   * search options 
@@ -19,19 +19,24 @@ call plug#begin('~/.vim/plugged')
 
 " nerdcommenter
 Plug 'scrooloose/nerdcommenter'
+" remove all default bindings
+let g:NERDCreateDefaultMappings = 0
 " alternate comment for c
 let g:NERDAltDelims_c = 1
 " add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
+
+" nerdtree
+Plug 'scrooloose/nerdtree'
+
+" syntastic
+Plug 'scrooloose/syntastic'
 
 " papercolor colorscheme
 Plug 'nlknguyen/papercolor-theme'
 
 " github colorscheme
 Plug 'cormacrelf/vim-colors-github'
-
-" multiple language syntax support
-Plug 'sheerun/vim-polyglot'
 
 " auto pair
 Plug 'jiangmiao/auto-pairs'
@@ -44,17 +49,6 @@ let g:rainbow_conf = {
 \       '33', '20', '5', '200'
 \   ]
 \ }
-
-" prettier
-Plug 'prettier/vim-prettier'
-
-" ocp-indent
-" Plug 'def-lkb/ocp-indent-vim'
-
-" svelte plugin
-Plug 'evanleck/vim-svelte'
-let g:svelte_indent_script = 0
-let g:svelte_indent_style = 0
 
 " list ends here. plugins become visible to vim after this call
 call plug#end()
@@ -197,10 +191,6 @@ nmap <leader>k <C-W><C-K>
 nmap <leader>l <C-W><C-L>
 nmap <leader>h <C-W><C-H>
 
-" faster buffer switching
-nmap <leader>g :bn<cr>
-nmap <leader>G :bp<cr>
-
 " add blank line under cursor
 nmap <leader>o o<Esc>
 
@@ -220,14 +210,19 @@ nmap <leader>f za
 nmap <leader>F zi
 
 " toggle rainbow paren
-" nmap <leader>p :RainbowToggle<cr>
+nmap <leader>p :RainbowToggle<cr>
 
 " highlight current line
-" nmap <leader>m mm:execute 'match Search /\%'.line('.').'l/'<CR>
-nmap <Leader>m :call matchadd('Search', '\%'.line('.').'l')<CR>
+nmap <leader>m :call matchadd('Search', '\%'.line('.').'l')<cr>
 
 " toggle uppercase
 nmap ` ~
+
+" nerdcommenter same binding as vscode
+map <C-_> :call NERDComment(0,"toggle")<cr>
+
+" nerdtree toggle
+nmap <leader>f :NERDTreeToggle<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""
 " => filetype specific settings
