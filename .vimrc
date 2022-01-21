@@ -23,6 +23,7 @@ Plug 'scrooloose/nerdcommenter'
 let g:NERDCreateDefaultMappings = 0
 " alternate comment for c
 let g:NERDAltDelims_c = 1
+let g:NERDAltDelims_rmd = 1
 " add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 
@@ -31,6 +32,9 @@ Plug 'scrooloose/nerdtree'
 
 " syntastic
 Plug 'scrooloose/syntastic'
+
+" polyglot
+Plug 'sheerun/vim-polyglot'
 
 " papercolor colorscheme
 Plug 'nlknguyen/papercolor-theme'
@@ -49,6 +53,9 @@ let g:rainbow_conf = {
 \       '33', '20', '5', '200'
 \   ]
 \ }
+
+" svelte
+Plug 'evanleck/vim-svelte'
 
 " list ends here. plugins become visible to vim after this call
 call plug#end()
@@ -221,8 +228,11 @@ nmap ` ~
 " nerdcommenter same binding as vscode
 map <C-_> :call NERDComment(0,"toggle")<cr>
 
+" save binding
+nmap <C-M> <esc>:w<cr>
+
 " nerdtree toggle
-nmap <leader>f :NERDTreeToggle<cr>
+nmap <leader>e :NERDTreeToggle<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""
 " => filetype specific settings
@@ -238,11 +248,13 @@ autocmd Filetype r imap -- <-
 autocmd Filetype r imap PP %>%
 
 autocmd Filetype rmd imap -- <-
-autocmd Filetype rmd nmap <leader>i o```{r<Esc>o<cr>```<Esc>k
+autocmd Filetype rmd nmap <leader>i o```{r<esc>lli<cr><cr><esc>ki
 autocmd Filetype rmd imap PP %>%
+autocmd BufWritePost *.Rmd :! Rscript -e 'rmarkdown::render("./eda.Rmd", output_format = "all")'
 
 " html, css, json
 autocmd Filetype html imap < <><Esc>i
+autocmd Filetype svelte imap < <><Esc>i
 
 " scheme
 autocmd BufNewFile,BufRead *.sld :set filetype=scheme
@@ -258,6 +270,9 @@ autocmd BufNewFile *.html 0r ~/Templates/html.html
 autocmd BufNewFile *.ejs 0r ~/Templates/html.html
 autocmd BufNewFile Makefile 0r ~/Templates/Makefile
 
+" md, txt
+autocmd Filetype markdown :set tw=80
+autocmd Filetype text :set tw=80
 " ocaml
 " let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 " execute "set rtp+=" . g:opamshare . "/merlin/vim"

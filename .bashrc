@@ -103,11 +103,11 @@ alias rmnl='sed -i "/^$/d"'
 alias jsonfmt='python3 -m json.tool'
 
 # podman docker cmd compatibility and shortcuts
-alias docker='podman'
-alias docker-compose='podman-compose'
+# alias docker='podman'
+# alias docker-compose='podman-compose'
 alias up='podman-compose up'
 alias down='podman-compose down'
-alias d='podman'
+alias d='docker'
 alias p='podman'
 
 # containers shortcut
@@ -140,6 +140,7 @@ alias gc='git commit -v'
 alias gcm='git commit -m'
 alias gcb='git checkout -b'
 alias gco='git checkout'
+alias gf='git fetch'
 alias ggpull='git pull origin $(git branch | sed -n -e "s/^\* \(.*\)/\1/p")'
 alias ggpush='git push origin $(git branch | sed -n -e "s/^\* \(.*\)/\1/p")'
 alias gl='git pull'
@@ -158,7 +159,8 @@ alias gstaa='git stash apply'
 alias gstp='git stash pop'
 alias gcl='git clone --recurse-submodules'
 alias gd='git diff'
-grb='git rebase'
+alias gdr='git diff HEAD~1'
+alias grb='git rebase'
 
 # terraform aliases
 alias tf='terraform'
@@ -189,4 +191,5 @@ alias ta='tmux attach'
 alias m='source ~/.bashrc; clear'
 alias ctf='cd ~/CTF'
 alias rmrf='rm -rf'
+alias xxdrp='xxd -r -p'
 
