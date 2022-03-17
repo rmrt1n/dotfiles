@@ -60,7 +60,19 @@ export PATH=$PATH:/home/rmrt1n/.node_modules_global/bin
 # export GOPATH=/home/rmrt1n/Projects/
 
 # aws eb cli
-export PATH="/home/rmrt1n/.ebcli-virtual-env/executables:$PATH"
+# export PATH="/home/rmrt1n/.ebcli-virtual-env/executables:$PATH"
+
+# flutter
+export PATH=$PATH:/home/rmrt1n/Projects/mobile/flutter/bin
+# android sdk
+export ANDROID_HOME=/home/rmrt1n/Projects/mobile/android
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/tools
+
+export PATH=~/.rbenv/bin:$PATH
+eval "$(rbenv init -)"
 
 ############################################
 # => aliases
@@ -192,4 +204,3 @@ alias m='source ~/.bashrc; clear'
 alias ctf='cd ~/CTF'
 alias rmrf='rm -rf'
 alias xxdrp='xxd -r -p'
-
