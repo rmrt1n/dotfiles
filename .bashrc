@@ -111,6 +111,7 @@ alias objdump='objdump -M intel'
 
 # utils
 alias doc2txt='libreoffice --headless --convert-to "txt:Text (encoded):UTF8" $@'
+alias doc2pdf='libreoffice --headless --convert-to pdf'
 alias rmnl='sed -i "/^$/d"'
 alias jsonfmt='python3 -m json.tool'
 
@@ -214,3 +215,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 . "$HOME/.cargo/env"
+
+# nvm use --lts
