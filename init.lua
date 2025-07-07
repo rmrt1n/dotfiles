@@ -58,7 +58,8 @@ vim.opt.cursorline = true
 -- minimal number of lines to keep above and below the cursor
 vim.opt.scrolloff = 7
 
--- shiftwidths
+-- tabs
+vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 
@@ -70,6 +71,8 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+-- see long lsp error
+vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 
 --  easier switching between tiles
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
@@ -105,6 +108,9 @@ vim.keymap.set("n", "k", "gk")
 -- switch buffers
 vim.keymap.set("n", "H", ":bp<cr>")
 vim.keymap.set("n", "L", ":bn<cr>")
+
+-- delete buffer
+vim.keymap.set("n", "<leader>x", ":bd<cr>")
 
 -- -----------------------------------------------------------------------------
 -- autocommands
@@ -442,7 +448,7 @@ require("lazy").setup({
 					-- accept ([y]es) the completion.
 					-- this will auto-import if your LSP supports it.
 					-- this will expand snippets if the LSP sent a snippet.
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					["<cr>"] = cmp.mapping.confirm({ select = true }),
 
 					-- manually trigger autocompletion
 					["<C-Space>"] = cmp.mapping.complete({}),
