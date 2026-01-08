@@ -1,0 +1,38 @@
+window-theme = light
+window-padding-x = 4
+window-padding-y = 4
+window-padding-balance = true
+
+theme = "GitHub Light Default"
+background = #ffffff
+foreground = #000000
+selection-background = #c1deff
+selection-foreground = #000000
+
+cursor-color = #000000
+cursor-text = #ffffff
+cursor-style = block
+
+font-family = CommitMono
+font-size = 10
+font-thicken = true
+font-feature = -calt
+
+keybind = ctrl+b>q=quit
+keybind = ctrl+b>c=new_tab
+keybind = ctrl+b>p=previous_tab
+keybind = ctrl+b>n=next_tab
+keybind = ctrl+b>o=toggle_tab_overview
+keybind = ctrl+b>s=new_split:right
+keybind = ctrl+b>v=new_split:down
+keybind = ctrl+b>k=goto_split:up
+keybind = ctrl+b>j=goto_split:down
+keybind = ctrl+b>h=goto_split:left
+keybind = ctrl+b>l=goto_split:right
+keybind = ctrl+b>z=toggle_split_zoom
+keybind = ctrl+b>x=close_surface
+keybind = ctrl+b>equal=equalize_splits
+keybind = ctrl+b>r=reload_config
+
+quit-after-last-window-closed = true
+mouse-hide-while-typing = true
