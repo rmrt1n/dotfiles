@@ -58,7 +58,7 @@ vim.opt.cursorline = true
 -- minimal number of lines to keep above and below the cursor
 vim.opt.scrolloff = 7
 
--- tabs
+-- shiftwidths
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -71,8 +71,6 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
--- see long lsp error
-vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 
 --  easier switching between tiles
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
@@ -110,7 +108,7 @@ vim.keymap.set("n", "H", ":bp<cr>")
 vim.keymap.set("n", "L", ":bn<cr>")
 
 -- delete buffer
-vim.keymap.set("n", "<leader>x", ":bd<cr>")
+vim.keymap.set("n", "X", ":bd<cr>")
 
 -- -----------------------------------------------------------------------------
 -- autocommands
@@ -213,7 +211,6 @@ require("lazy").setup({
 	{
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
-		branch = "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
@@ -311,6 +308,12 @@ require("lazy").setup({
 
 					-- execute a code action, usually your cursor needs to be on top of an error
 					map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
+
+					-- rename the variable under your cursor.
+					map("<leader>cd", vim.lsp.buf.rename, "[C]ode [R]ename")
+
+					-- line diagnostics
+					map("<leader>cd", vim.diagnostic.open_float, "Line Diagnostics")
 
 					-- jump to declaration, not definition
 					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
@@ -470,9 +473,9 @@ require("lazy").setup({
 		config = function()
 			require("mini.comment").setup({
 				mappings = {
-					comment = "<C-_>",
-					comment_line = "<C-_>",
-					comment_visual = "<C-_>",
+					comment = "<C-/>",
+					comment_line = "<C-/>",
+					comment_visual = "<C-/>",
 				},
 			})
 			require("mini.pairs").setup({
@@ -483,7 +486,8 @@ require("lazy").setup({
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		main = "nvim-treesitter.configs",
+		lazy = false,
+		main = "nvim-treesitter.config",
 		opts = {
 			ensure_installed = {
 				"bash",
@@ -522,6 +526,18 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
 		},
+		init = function()
+			if vim.fn.argc(-1) == 1 then
+				local stat = vim.loop.fs_stat(vim.fn.argv(0))
+				if stat and stat.type == "directory" then
+					require("neo-tree").setup({
+						filesystem = {
+							hijack_netrw_behavior = "open_current",
+						},
+					})
+				end
+			end
+		end,
 		opts = {
 			sources = { "filesystem", "buffers", "git_status" },
 			open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
@@ -568,29 +584,48 @@ require("lazy").setup({
 		},
 	},
 	{
-		"Olical/conjure",
-		dependencies = {
-			{
-				"PaterJason/cmp-conjure",
-				lazy = true,
-				config = function()
-					local cmp = require("cmp")
-					local config = cmp.get_config()
-					table.insert(config.sources, { name = "conjure" })
-					return cmp.setup(config)
-				end,
+		"lewis6991/gitsigns.nvim",
+		opts = {
+			signs = {
+				add = { text = "+" },
+				change = { text = "~" },
+				delete = { text = "_" },
+				topdelete = { text = "‾" },
+				changedelete = { text = "~" },
 			},
 		},
-		ft = { "clojure", "fennel", "python" },
-		lazy = true,
-		init = function()
-			-- vim.g["conjure#debug"] = true
+		config = function(_, opts)
+			local gitsigns = require("gitsigns")
+			gitsigns.setup(opts)
+
+			local function review()
+				local file = vim.api.nvim_buf_get_name(0)
+				local dir = file ~= "" and vim.fs.dirname(file) or vim.fn.getcwd()
+
+				local base = vim.fn.system({
+					"git",
+					"-C",
+					dir,
+					"merge-base",
+					"HEAD",
+					"main",
+				})
+
+				if vim.v.shell_error ~= 0 then
+					vim.notify(base, vim.log.levels.ERROR)
+					return
+				end
+
+				gitsigns.change_base(vim.trim(base), true)
+			end
+
+			local function unreview()
+				gitsigns.reset_base(true)
+			end
+
+			vim.api.nvim_create_user_command("Review", review, {})
+			vim.api.nvim_create_user_command("Unreview", unreview, {})
 		end,
-	},
-	{
-		"rktjmp/lush.nvim",
-		-- if you wish to use your own colorscheme:
-		{ dir = "/home/rmrt1n/Containes/dev40/projects/ougi", lazy = true },
 	},
 	{
 		"projekt0n/github-nvim-theme",
@@ -599,13 +634,31 @@ require("lazy").setup({
 		priority = 1000, -- make sure to load this before all the other start plugins
 		config = function()
 			require("github-theme").setup({
+				vim.cmd.colorscheme("github_light"),
 				-- ...
 			})
-			vim.cmd("colorscheme github_light_tritanopia")
 		end,
 	},
-	-- structural editing
-	{},
+	-- {
+	-- 	"zenbones-theme/zenbones.nvim",
+	-- 	-- Optionally install Lush. Allows for more configuration or extending the colorscheme
+	-- 	-- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+	-- 	-- In Vim, compat mode is turned on as Lush only works in Neovim.
+	-- 	dependencies = "rktjmp/lush.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	-- you can set set configuration options here
+	-- 	config = function()
+	-- 		vim.cmd.colorscheme("lancia")
+	-- 	end,
+	-- },
+	-- {
+	-- 	"dchinmay2/alabaster.nvim",
+	-- 	config = function()
+	-- 		vim.opt.background = "light"
+	-- 		vim.cmd.colorscheme("alabaster")
+	-- 	end,
+	-- },
 }, {})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
